@@ -12,6 +12,7 @@ import { TransactionRow } from '@/components/home/TransactionRow';
 import { AnimatedBalance } from '@/components/home/AnimatedBalance';
 import { Header } from '@/components/Header';
 import {ActionCards} from "@/components/home/ActionCards";
+import {PromoCard} from "@/components/home/PromoCard";
 
 export default function HomeScreen() {
     const dispatch = useAppDispatch();
@@ -84,6 +85,8 @@ export default function HomeScreen() {
                         ))
                     )}
                 </View>
+
+                <PromoCard/>
             </ScrollView>
         </SafeAreaView>
     );
@@ -109,8 +112,16 @@ const styles = StyleSheet.create({
         marginBottom: 32,
         marginTop: 8,
     },
-    greeting: { color: '#888', fontSize: 14, fontFamily: Fonts.inter.medium },
-    name: { color: '#00003C', fontSize: 22, fontFamily: Fonts.manrope.extraBold },
+    greeting: {
+        color: '#888',
+        fontSize: 14,
+        fontFamily: Fonts.inter.medium
+    },
+    name: {
+        color: '#00003C',
+        fontSize: 22,
+        fontFamily: Fonts.manrope.extraBold
+    },
     logoutBtn: {
         backgroundColor: '#1a1a2e',
         paddingHorizontal: 16,
@@ -119,7 +130,10 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#333',
     },
-    logoutText: { color: '#888', fontSize: 13 },
+    logoutText: {
+        color: '#888',
+        fontSize: 13
+    },
     balanceCard: {
         backgroundColor: '#00003C',
         borderRadius: 20,
@@ -147,7 +161,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 20,
     },
-    avatarGroup: { flexDirection: 'row', alignItems: 'center' },
+    avatarGroup: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
     avatar: {
         width: 36,
         height: 36,
@@ -157,17 +174,35 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: '#00003C',
     },
-    avatarGrey: { backgroundColor: '#E4E1EB', zIndex: 1 },
-    avatarYellow: { backgroundColor: '#FCD400', marginLeft: -10, zIndex: 2 },
-    avatarText: { color: '#00003C', fontSize: 14, fontWeight: '600' },
-    avatarStar: { color: '#00003C', fontSize: 14 },
+    avatarGrey: {
+        backgroundColor: '#E4E1EB',
+        zIndex: 1
+    },
+    avatarYellow: {
+        backgroundColor: '#FCD400',
+        marginLeft: -10,
+        zIndex: 2
+    },
+    avatarText: {
+        color: '#00003C',
+        fontSize: 14,
+        fontWeight: '600'
+    },
+    avatarStar: {
+        color: '#00003C',
+        fontSize: 14
+    },
     redeemBtn: {
         backgroundColor: '#FCD400',
         paddingHorizontal: 24,
         paddingVertical: 12,
         borderRadius: 24,
     },
-    redeemText: { color: '#6E5C00', fontSize: 15, fontWeight: '700' },
+    redeemText: {
+        color: '#6E5C00',
+        fontSize: 15,
+        fontWeight: '700'
+    },
     sectionTitleRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -193,7 +228,19 @@ const styles = StyleSheet.create({
         backgroundColor: '#FCD400',
         marginTop: 4,
     },
-    section: { borderRadius: 16, padding: 0 },
-    loadingText: { color: '#666', textAlign: 'center', padding: 16 },
-    emptyText: { color: '#666', textAlign: 'center', padding: 16 },
+    section: {
+        borderRadius: 16,
+        padding: 0,
+        marginBottom: 12
+    },
+    loadingText: {
+        color: '#666',
+        textAlign: 'center',
+        padding: 16
+    },
+    emptyText: {
+        color: '#666',
+        textAlign: 'center',
+        padding: 16
+    },
 });
