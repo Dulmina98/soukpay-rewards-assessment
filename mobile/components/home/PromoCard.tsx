@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
     },
     textSection: {
         padding: 36,
-        paddingBottom: 20,
     },
     badge: {
         backgroundColor: '#00003C',
@@ -62,7 +61,7 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.manrope.extraBold,
         letterSpacing: -0.75,
         marginBottom: 15,
-        lineHeight: 30,
+        lineHeight: 32,
     },
     description: {
         color: '#464653',
