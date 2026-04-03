@@ -13,6 +13,7 @@ interface AuthState {
     token: string | null;
     isLoading: boolean;
     isAuthenticated: boolean;
+    isInitialized: boolean;
     error: string | null;
 }
 
@@ -21,6 +22,7 @@ const initialState: AuthState = {
     token: null,
     isLoading: false,
     isAuthenticated: false,
+    isInitialized: false,
     error: null,
 };
 
@@ -115,6 +117,10 @@ const authSlice = createSlice({
                     state.token = action.payload;
                     state.isAuthenticated = true;
                 }
+                state.isInitialized = true;
+            })
+            .addCase(loadStoredAuth.rejected, (state) => {
+                state.isInitialized = true;
             });
 
         // logoutUser
