@@ -11,6 +11,7 @@ import { Fonts } from '@/constants/fonts';
 import { TransactionRow } from '@/components/home/TransactionRow';
 import { AnimatedBalance } from '@/components/home/AnimatedBalance';
 import { Header } from '@/components/Header';
+import {ActionCards} from "@/components/home/ActionCards";
 
 export default function HomeScreen() {
     const dispatch = useAppDispatch();
@@ -62,6 +63,8 @@ export default function HomeScreen() {
                         </TouchableOpacity>
                     </View>
                 </View>
+
+                <ActionCards/>
 
                 <View style={styles.sectionTitleRow}>
                     <Text style={styles.sectionTitle}>Activity Log</Text>
