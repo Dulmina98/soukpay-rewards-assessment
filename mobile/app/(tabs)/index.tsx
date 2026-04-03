@@ -10,6 +10,7 @@ import { logoutUser } from '@/store/slices/authSlice';
 import { Fonts } from '@/constants/fonts';
 import { TransactionRow } from '@/components/home/TransactionRow';
 import { AnimatedBalance } from '@/components/home/AnimatedBalance';
+import { Header } from '@/components/Header';
 
 export default function HomeScreen() {
     const dispatch = useAppDispatch();
@@ -27,11 +28,12 @@ export default function HomeScreen() {
 
     return (
         <SafeAreaView style={styles.safe}>
+            <Header showWelcome />
             <ScrollView
                 style={styles.container}
                 contentContainerStyle={styles.content}
             >
-                <View style={styles.header}>
+                {/*<View style={styles.header}>
                     <View>
                         <Text style={styles.greeting}>Welcome back,</Text>
                         <Text style={styles.name}>{name || '...'}</Text>
@@ -39,7 +41,7 @@ export default function HomeScreen() {
                     <TouchableOpacity onPress={handleLogout} style={styles.logoutBtn}>
                         <Text style={styles.logoutText}>Logout</Text>
                     </TouchableOpacity>
-                </View>
+                </View>*/}
 
                 <View style={styles.balanceCard}>
                     <Text style={styles.balanceLabel}>Current Assets</Text>
@@ -87,10 +89,16 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
     safe: {
         height: Dimensions.get('window').height,
-        backgroundColor: '#FBF8FF',
+        backgroundColor: '#FFF',
     },
-    container: { flex: 1 },
-    content: { padding: 24, paddingBottom: 80 },
+    container: {
+        flex: 1,
+        backgroundColor: '#FBF8FF'
+    },
+    content: {
+        padding: 24,
+        paddingBottom: 80
+    },
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
