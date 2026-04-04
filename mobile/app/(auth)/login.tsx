@@ -4,6 +4,7 @@ import {
     StyleSheet, ActivityIndicator, KeyboardAvoidingView,
     Platform, ScrollView, StatusBar,
 } from 'react-native';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { loginUser, clearError } from '@/store/slices/authSlice';
 import { Fonts } from "@/constants/fonts";
@@ -16,6 +17,7 @@ export default function LoginScreen() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [validationError, setValidationError] = useState('');
 
     const validateEmail = (email: string) => {
@@ -73,14 +75,27 @@ export default function LoginScreen() {
                         <Text style={styles.forgotText}>Forgot?</Text>
                     </TouchableOpacity>
                 </View>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Password"
-                    placeholderTextColor="#767684"
-                    value={password}
-                    onChangeText={setPassword}
-                    secureTextEntry
-                />
+                <View style={styles.passwordWrapper}>
+                    <TextInput
+                        style={styles.passwordInput}
+                        placeholder="Password"
+                        placeholderTextColor="#767684"
+                        value={password}
+                        onChangeText={setPassword}
+                        secureTextEntry={!showPassword}
+                    />
+                    <TouchableOpacity
+                        style={styles.eyeBtn}
+                        onPress={() => setShowPassword((v) => !v)}
+                        activeOpacity={0.6}
+                    >
+                        <MaterialCommunityIcons
+                            name={showPassword ? 'eye-off-outline' : 'eye-outline'}
+                            size={20}
+                            color="#767684"
+                        />
+                    </TouchableOpacity>
+                </View>
 
                 {validationError ? (
                     <Text style={styles.error}>{validationError}</Text>
@@ -194,6 +209,23 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         color: '#00003C',
         fontSize: 16,
+    },
+    passwordWrapper: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#E4E1EB',
+        borderRadius: 12,
+    },
+    passwordInput: {
+        flex: 1,
+        paddingVertical: 18,
+        paddingHorizontal: 20,
+        color: '#00003C',
+        fontSize: 16,
+    },
+    eyeBtn: {
+        paddingHorizontal: 16,
+        paddingVertical: 18,
     },
     forgotText: {
         color: "#000080",
