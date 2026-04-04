@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import * as SecureStore from 'expo-secure-store';
-import { apiLogin } from '../../services/api';
+import { apiLogin } from '@/services/api';
 
 interface User {
     id: string;
@@ -122,6 +122,15 @@ const authSlice = createSlice({
             .addCase(loadStoredAuth.rejected, (state) => {
                 state.isInitialized = true;
             });
+
+        builder.addCase('user/fetchProfile/rejected', (state, action: any) => {
+            const msg: string = action.payload ?? '';
+            if (msg.includes('User not found') || msg.includes('Invalid') || msg.includes('401')) {
+                state.user = null;
+                state.token = null;
+                state.isAuthenticated = false;
+            }
+        });
 
         // logoutUser
         builder

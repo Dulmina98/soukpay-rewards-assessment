@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { apiGetMe, apiGetTransactions } from '@/services/api';
+import * as SecureStore from 'expo-secure-store';
 
 interface Transaction {
     id: string;
@@ -29,10 +30,14 @@ const initialState: UserState = {
 
 export const fetchUserProfile = createAsyncThunk(
     'user/fetchProfile',
-    async (_, { rejectWithValue }) => {
+    async (_, { rejectWithValue, dispatch }) => {
         try {
             return await apiGetMe();
         } catch (error: any) {
+            if (error.message === 'User not found' || error.message?.includes('401') || error.message?.includes('Invalid')) {
+                await SecureStore.deleteItemAsync('token');
+                await SecureStore.deleteItemAsync('tokenExpiry');
+            }
             return rejectWithValue(error.message);
         }
     }
@@ -75,8 +80,15 @@ const userSlice = createSlice({
                 state.isLoading = false;
                 state.error = action.payload as string;
             })
+            .addCase(fetchRecentTransactions.pending, (state) => {
+                state.isLoading = true;
+            })
             .addCase(fetchRecentTransactions.fulfilled, (state, action) => {
+                state.isLoading = false;
                 state.recentTransactions = action.payload;
+            })
+            .addCase(fetchRecentTransactions.rejected, (state) => {
+                state.isLoading = false;
             });
     },
 });
