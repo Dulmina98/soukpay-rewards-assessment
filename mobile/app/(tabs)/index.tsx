@@ -87,6 +87,9 @@ export default function HomeScreen() {
                 </View>
 
                 <PromoCard/>
+                <TouchableOpacity onPress={handleLogout} style={styles.logoutBtn}>
+                    <Text style={styles.logoutText}>Logout</Text>
+                </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>
     );
@@ -131,8 +134,9 @@ const styles = StyleSheet.create({
         borderColor: '#333',
     },
     logoutText: {
-        color: '#888',
-        fontSize: 13
+        color: '#FFF',
+        fontSize: 13,
+        textAlign: "center"
     },
     balanceCard: {
         backgroundColor: '#00003C',
