@@ -1,7 +1,10 @@
 import { useEffect } from 'react';
+import { View } from 'react-native';
 import { Provider } from 'react-redux';
 import { store } from '@/store';
 import { AuthGate } from '@/components/AuthGate';
+import { OfflineBanner } from '@/components/OfflineBanner';
+import { useNetworkStatus } from '@/hooks/useNetworkStatus';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import {
@@ -20,6 +23,17 @@ import {
 } from '@expo-google-fonts/manrope';
 
 SplashScreen.preventAutoHideAsync();
+
+function AppWithOffline() {
+    const isOnline = useNetworkStatus();
+
+    return (
+        <View style={{ flex: 1 }}>
+            <OfflineBanner isOnline={isOnline} />
+            <AuthGate />
+        </View>
+    );
+}
 
 export default function RootLayout() {
     const [fontsLoaded] = useFonts({
@@ -45,7 +59,7 @@ export default function RootLayout() {
 
     return (
         <Provider store={store}>
-            <AuthGate />
+            <AppWithOffline />
         </Provider>
     );
 }

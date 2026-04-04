@@ -4,19 +4,22 @@ import {BlurView} from 'expo-blur';
 import {Fonts} from '@/constants/fonts';
 import type {Reward} from '@/store/slices/rewardsSlice';
 
-export function RewardCard({item, userBalance, onPress}: {
+export function RewardCard({item, userBalance, onPress, isOnline}: {
     item: Reward;
     userBalance: number;
     onPress: (reward: Reward) => void;
+    isOnline: boolean;
 }) {
     const canAfford = userBalance >= item.points_cost;
+    const canRedeem = canAfford && isOnline;
 
     return (
         <TouchableOpacity
-            style={[styles.card, !canAfford && styles.cardDisabled]}
-            onPress={() => canAfford && onPress(item)}
-            activeOpacity={canAfford ? 0.85 : 1}
+            style={[styles.card, !canRedeem && styles.cardDisabled]}
+            onPress={() => canRedeem && onPress(item)}
+            activeOpacity={canRedeem ? 0.85 : 1}
         >
+            {!canRedeem && <View style={styles.cardDisabledTint}/>}
             <View style={styles.cardImageWrapper}>
                 {item.image_url ? (
                     <Image
@@ -30,16 +33,18 @@ export function RewardCard({item, userBalance, onPress}: {
                     </View>
                 )}
 
-                {!canAfford && (
+                {!canRedeem && (
                     <>
                         <BlurView
                             intensity={18}
                             tint="light"
-                            style={StyleSheet.absoluteFill}
+                            style={[StyleSheet.absoluteFill]}
                         />
                         <View style={styles.lockBadge}>
                             <MaterialCommunityIcons name="lock-outline" size={14} color="#00003C"/>
-                            <Text style={styles.lockBadgeText}>INSUFFICIENT POINTS</Text>
+                            <Text style={styles.lockBadgeText}>
+                                {!isOnline ? 'YOU ARE OFFLINE' : 'INSUFFICIENT POINTS'}
+                            </Text>
                         </View>
                     </>
                 )}
@@ -67,13 +72,13 @@ export function RewardCard({item, userBalance, onPress}: {
                         </Text>
                     </View>
                     <TouchableOpacity
-                        style={[styles.claimBtn, !canAfford && styles.claimBtnDisabled]}
-                        onPress={() => canAfford && onPress(item)}
-                        disabled={!canAfford}
+                        style={[styles.claimBtn, !canRedeem && styles.claimBtnDisabled]}
+                        onPress={() => canRedeem && onPress(item)}
+                        disabled={!canRedeem}
                         activeOpacity={0.85}
                     >
-                        <Text style={[styles.claimBtnText, !canAfford && styles.claimBtnTextDisabled]}>
-                            {canAfford ? 'Claim Now' : 'Locked'}
+                        <Text style={[styles.claimBtnText, !canRedeem && styles.claimBtnTextDisabled]}>
+                            {!isOnline ? 'Offline' : canAfford ? 'Claim Now' : 'Locked'}
                         </Text>
                     </TouchableOpacity>
                 </View>
@@ -89,9 +94,17 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         marginBottom: 16,
         overflow: 'hidden',
+        position: "relative"
     },
     cardDisabled: {
         opacity: 0.85,
+    },
+    cardDisabledTint: {
+        position: "absolute",
+        width: "100%",
+        height: "100%",
+        backgroundColor: 'rgba(198,197,213,0.8)',
+        zIndex: 10,
     },
     cardImageWrapper: {
         width: '100%',
@@ -109,7 +122,7 @@ const styles = StyleSheet.create({
     },
     lockBadge: {
         position: 'absolute',
-        bottom: '35%',
+        bottom: '2%',
         alignSelf: 'center',
         flexDirection: 'row',
         alignItems: 'center',
@@ -118,6 +131,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         paddingVertical: 10,
         borderRadius: 999,
+        zIndex: 20,
     },
     lockBadgeText: {
         color: '#00003C',

@@ -15,12 +15,15 @@ import {BalanceHeader} from '@/components/rewards/BalanceHeader';
 import {CategoryTabs, CATEGORIES} from '@/components/rewards/CategoryTabs';
 import {RewardCard} from '@/components/rewards/RewardCard';
 import {RedeemModal} from '@/components/rewards/RedeemModal';
+import {useNetworkStatus} from '@/hooks/useNetworkStatus';
 
 export default function RewardsScreen() {
     const dispatch = useAppDispatch();
     const {rewards, isLoading, isRedeeming, redeemError} =
         useAppSelector((state) => state.rewards);
     const {balance} = useAppSelector((state) => state.user);
+
+    const isOnline = useNetworkStatus();
 
     const [selectedReward, setSelectedReward] = useState<Reward | null>(null);
     const [modalVisible, setModalVisible] = useState(false);
@@ -92,6 +95,7 @@ export default function RewardsScreen() {
                         item={item}
                         userBalance={balance}
                         onPress={handleCardPress}
+                        isOnline={isOnline}
                     />
                 )}
                 ListHeaderComponent={
@@ -118,6 +122,7 @@ export default function RewardsScreen() {
                 visible={modalVisible}
                 isRedeeming={isRedeeming}
                 error={redeemError}
+                isOnline={isOnline}
                 onConfirm={handleConfirmRedeem}
                 onClose={handleCloseModal}
             />

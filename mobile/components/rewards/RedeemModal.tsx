@@ -3,11 +3,12 @@ import {MaterialCommunityIcons} from '@expo/vector-icons';
 import {Fonts} from '@/constants/fonts';
 import type {Reward} from '@/store/slices/rewardsSlice';
 
-export function RedeemModal({reward, visible, isRedeeming, error, onConfirm, onClose}: {
+export function RedeemModal({reward, visible, isRedeeming, error, isOnline, onConfirm, onClose}: {
     reward: Reward | null;
     visible: boolean;
     isRedeeming: boolean;
     error: string | null;
+    isOnline: boolean;
     onConfirm: () => void;
     onClose: () => void;
 }) {
@@ -45,12 +46,17 @@ export function RedeemModal({reward, visible, isRedeeming, error, onConfirm, onC
                             </View>
                         </View>
 
+                        {!isOnline && (
+                            <Text style={styles.modalError}>
+                                You are offline. Please reconnect to redeem.
+                            </Text>
+                        )}
                         {error ? <Text style={styles.modalError}>{error}</Text> : null}
 
                         <TouchableOpacity
-                            style={[styles.confirmBtn, isRedeeming && styles.confirmBtnDisabled]}
+                            style={[styles.confirmBtn, (isRedeeming || !isOnline) && styles.confirmBtnDisabled]}
                             onPress={onConfirm}
-                            disabled={isRedeeming}
+                            disabled={isRedeeming || !isOnline}
                         >
                             {isRedeeming ? (
                                 <ActivityIndicator color="#00003C"/>
