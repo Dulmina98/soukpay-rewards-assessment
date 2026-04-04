@@ -46,6 +46,7 @@ const transactionsSlice = createSlice({
             state.items = [];
             state.page = 1;
             state.hasMore = true;
+            state.isRefreshing = true;
         },
     },
     extraReducers: (builder) => {
