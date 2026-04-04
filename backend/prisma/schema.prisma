@@ -7,47 +7,48 @@ datasource db {
 }
 
 model User {
-  id           String       @id @default(uuid())
-  email        String       @unique
-  name         String
-  password     String
-  push_token   String?
-  created_at   DateTime     @default(now())
+  id         String   @id @default(uuid())
+  email      String   @unique
+  name       String
+  password   String
+  push_token String?
+  created_at DateTime @default(now())
 
-  ledger       PointLedger[]
-  redemptions  Redemption[]
+  ledger      PointLedger[]
+  redemptions Redemption[]
 }
 
 model PointLedger {
   id         String   @id @default(uuid())
   user_id    String
-  delta      Int      // positive = earn, negative = redeem
+  delta      Int // positive = earn, negative = redeem
   reason     String
   created_at DateTime @default(now())
 
-  user       User     @relation(fields: [user_id], references: [id])
+  user User @relation(fields: [user_id], references: [id])
 }
 
 model Reward {
-  id              String       @id @default(uuid())
+  id              String  @id @default(uuid())
   name            String
   description     String
+  category        String  @default("general")
   image_url       String?
   points_cost     Int
   stock_remaining Int
-  is_active       Boolean      @default(true)
+  is_active       Boolean @default(true)
 
-  redemptions     Redemption[]
+  redemptions Redemption[]
 }
 
 model Redemption {
-  id               String   @id @default(uuid())
-  user_id          String
-  reward_id        String
-  points_cost      Int
-  created_at       DateTime @default(now())
-  idempotency_key  String   @unique
+  id              String   @id @default(uuid())
+  user_id         String
+  reward_id       String
+  points_cost     Int
+  created_at      DateTime @default(now())
+  idempotency_key String   @unique
 
-  user             User     @relation(fields: [user_id], references: [id])
-  reward           Reward   @relation(fields: [reward_id], references: [id])
+  user   User   @relation(fields: [user_id], references: [id])
+  reward Reward @relation(fields: [reward_id], references: [id])
 }

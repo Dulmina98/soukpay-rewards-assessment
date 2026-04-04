@@ -28,16 +28,44 @@ async function main() {
 
     await Promise.all([
         prisma.reward.create({
-            data: { name: 'Free Coffee', description: 'A hot or cold coffee of your choice', points_cost: 150, stock_remaining: 50 }
+            data: {
+                name: 'Free Coffee',
+                description: 'A hot or cold coffee of your choice at any participating outlet',
+                category: 'Food & Drink',
+                image_url: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400',
+                points_cost: 150,
+                stock_remaining: 50
+            }
         }),
         prisma.reward.create({
-            data: { name: 'Movie Ticket', description: 'One cinema ticket at any branch', points_cost: 500, stock_remaining: 20 }
+            data: {
+                name: 'Movie Ticket',
+                description: 'One cinema ticket at any branch, valid for all screenings',
+                category: 'Entertainment',
+                image_url: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400',
+                points_cost: 500,
+                stock_remaining: 20
+            }
         }),
         prisma.reward.create({
-            data: { name: 'Shopping Voucher', description: '$10 off your next purchase', points_cost: 300, stock_remaining: 100 }
+            data: {
+                name: 'Shopping Voucher',
+                description: '$10 off your next purchase at any partner store',
+                category: 'Shopping',
+                image_url: 'https://images.unsplash.com/photo-1576678433053-e996459370e3?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                points_cost: 300,
+                stock_remaining: 100
+            }
         }),
         prisma.reward.create({
-            data: { name: 'Premium Membership', description: '1 month premium access', points_cost: 1000, stock_remaining: 10 }
+            data: {
+                name: 'Premium Membership',
+                description: '1 month premium access with exclusive benefits and discounts',
+                category: 'Membership',
+                image_url: 'https://images.unsplash.com/photo-1605098293544-25f4c32344c8?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                points_cost: 1000,
+                stock_remaining: 10
+            }
         }),
     ]);
 
