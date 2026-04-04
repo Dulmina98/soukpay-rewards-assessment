@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { apiGetRewards, apiRedeemReward } from '@/services/api';
 
-interface Reward {
+export interface Reward {
     id: string;
     name: string;
     description: string;
+    category: string;
     image_url: string | null;
     points_cost: number;
     stock_remaining: number;
