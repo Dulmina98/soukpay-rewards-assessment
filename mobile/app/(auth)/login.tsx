@@ -67,7 +67,7 @@ export default function LoginScreen() {
                 />
 
                 <View style={styles.inputLabelContainer}>
-                    <Text style={styles.inputLabel}>Email Address</Text>
+                    <Text style={styles.inputLabel}>Password</Text>
                     <TouchableOpacity activeOpacity={0.5}
                     >
                         <Text style={styles.forgotText}>Forgot?</Text>
